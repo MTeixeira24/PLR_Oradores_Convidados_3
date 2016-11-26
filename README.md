@@ -26,23 +26,39 @@ com  diferentes  parâmetros,  isto  é, diferentes números de palestras, tópi
 
 
 * DECOMPOSITION 
+
 An attempt to rewrite the problem in a way that is easier to better visualize the constraints and variables
 
 1) A scientific conference will be hosted for D days.
+
 2) Such conference has a set of guest speakers
+
 3) Each speaker will talk about one subject
+
 4) Two speakers cannot have the same subject to talk about
+
 5) The subjects are prepared beforehand with a list of possible speakers for each subject
+
 6) There is room for N speeches
+
 7) N is typically less than the number of available subjects.
+
 8) The speakers all have to be from different countries
+
 9) Half of the speakers have to be female and the other half male
+
 10) The budget allocated for the speakers must never be exceeded
+
 11)The expenses for transportation and stay of each speaker are covered by the organization
+
 12)The cost of transportation varies from speaker to speaker
+
 13)Some speakers demand to travel first-class
+
 14)The cost for stay may be constant among speakers
+
 15)Should a speaker stay in the city where the conference will be held for more than a night, the cost of stay is reduced
+
 16) =TOCONTINUE=  
 
 
