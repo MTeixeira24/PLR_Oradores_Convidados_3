@@ -1,8 +1,8 @@
 # Oradores Convidados
 
-************************
-*      PROBLEM         *
-************************
+
+* PROBLEM         
+
 Taken from the second pratical assignment statment:
 
 Uma  conferência  científica,  a  realizar  ao  longo  de  D  dias  numa  determinada  cidade,  tem  um conjunto  de  oradores  convidados,  que  falam  
@@ -24,9 +24,8 @@ aspectos  de  “Lógica  Computacional”,  pelo  que  será  preferível  ter 
 Defina o problema como um problema de satisfação de restrições e resolva-o com PLR, de modo a  que  seja  possível  resolver  problemas  desta  classe  
 com  diferentes  parâmetros,  isto  é, diferentes números de palestras, tópicos, oradores possíveis, custos de deslocação/alojamento, orçamento, etc.
 
-************************
-*     DECOMPOSITION    *
-************************
+
+* DECOMPOSITION 
 An attempt to rewrite the problem in a way that is easier to better visualize the constraints and variables
 1. A scientific conference will be hosted for D days.
 2. Such conference has a set of guest speakers
@@ -45,12 +44,11 @@ An attempt to rewrite the problem in a way that is easier to better visualize th
 15.Should a speaker stay in the city where the conference will be held for more than a night, the cost of stay is reduced
 16.  
 
-************************
-*  DOMINION/VARIABLES  *
-************************
+
+* DOMINION/VARIABLES
+
 Identification of possible variables and their corresponding dominion
 
-************************
-*      CONSTRAINTS     *
-************************
+* CONSTRAINTS
+
 A more formal writing of the constraints that the variables shall have to abide
