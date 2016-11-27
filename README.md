@@ -12,17 +12,10 @@ Na conferência caberão N palestras, em que N é tipicamente menor do que o nú
 de  países  diferentes.  Adicionalmente,  a conferência  promove  igualdade  de  género,  pelo  que  metade  dos  oradores  convidados  deve  ser do 
 sexo feminino, e metade do sexo masculino. A organização tem um orçamento limitado para despesas com oradores, que não pode jamais ser ultrapassado.
 
-As  despesas  de  deslocação  e  estadia  de  cada  orador  são  cobertas  pela  organização  da conferência. Para cada orador, a organização estuda 
-o custo de deslocação (viagem desde o seu ponto de origem até ao local de realização da conferência, tendo em conta que alguns oradores exigem  viajar  
-em  primeira  classe).  A  estadia  terá,  em  princípio,  um  custo  fixo  por  orador. 
-Contudo, pode haver casos de oradores que se saiba de antemão  não poderem ficar  na cidade onde vai ocorrer a conferência mais do que uma noite, o 
-que faz com que o custo relacionado com o seu alojamento seja menor.
-No que toca aos tópicos das palestras, os organizadores elaboraram uma tabela de proximidade, com o  objetivo  de  maximizar  a  “distância”  entre  os  
-tópicos  a  abordar.  Por  exemplo,  numa conferência com 2 palestras e 3 tópicos possíveis, uma palestra sobre “Programação em Lógica” cobre  sempre  
-aspectos  de  “Lógica  Computacional”,  pelo  que  será  preferível  ter apenas  um destes tópicos como tema central de uma palestra, ficando a outra com 
-“Jogos”, pois este é um tópico mais “distante” dos dois tópicos anteriores.
-Defina o problema como um problema de satisfação de restrições e resolva-o com PLR, de modo a  que  seja  possível  resolver  problemas  desta  classe  
-com  diferentes  parâmetros,  isto  é, diferentes números de palestras, tópicos, oradores possíveis, custos de deslocação/alojamento, orçamento, etc.
+As  despesas  de  deslocação  e  estadia  de  cada  orador  são  cobertas  pela  organização  da conferência. Para cada orador, a organização estuda o custo de deslocação (viagem desde o seu ponto de origem até ao local de realização da conferência, tendo em conta que alguns oradores exigem  viajar  em  primeira  classe).  A  estadia  terá,  em  princípio,  um  custo  fixo  por  orador. 
+Contudo, pode haver casos de oradores que se saiba de antemão  não poderem ficar  na cidade onde vai ocorrer a conferência mais do que uma noite, o que faz com que o custo relacionado com o seu alojamento seja menor.
+No que toca aos tópicos das palestras, os organizadores elaboraram uma tabela de proximidade, com o  objetivo  de  maximizar  a  “distância”  entre  os  tópicos  a  abordar.  Por  exemplo,  numa conferência com 2 palestras e 3 tópicos possíveis, uma palestra sobre “Programação em Lógica” cobre  sempre aspectos  de  “Lógica  Computacional”,  pelo  que  será  preferível  ter apenas  um destes tópicos como tema central de uma palestra, ficando a outra com “Jogos”, pois este é um tópico mais “distante” dos dois tópicos anteriores.
+Defina o problema como um problema de satisfação de restrições e resolva-o com PLR, de modo a  que  seja  possível  resolver  problemas desta  classe  com  diferentes  parâmetros,  isto  é, diferentes números de palestras, tópicos, oradores possíveis, custos de deslocação/alojamento, orçamento, etc.
 
 
 * DECOMPOSITION 
@@ -59,7 +52,13 @@ An attempt to rewrite the problem in a way that is easier to better visualize th
 
 15)Should a speaker stay in the city where the conference will be held for more than a night, the cost of stay is reduced
 
-16) =TOCONTINUE=  
+16) Subjects are organized in a "proximity" table
+
+17) Distance of subjects tries to group together similiar subjects into one lecture (ie: Logic Programming and computacional logic have a small distance, but Logic programming and Video Games have more distance)
+
+18) A lecture will have a main subject that may cover a similar subject based on distance
+
+19) Different parameters include: Number os lectures, Subjects, Speakers, Cost of stay and transportations, budget, etc.
 
 
 * DOMINION/VARIABLES
