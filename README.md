@@ -65,6 +65,19 @@ An attempt to rewrite the problem in a way that is easier to better visualize th
 
 Identification of possible variables and their corresponding dominion
 
+Number of talks (palestras)
+Budget
+Number of speakers
+A matrix with n lines and n columns where n is the number of topics
+The topics can be hard coded into the predicate
+The matrix will have in its diagonal the value 0 which indicates the same topic
+The farther from this diagonal the larger the distance.
+
+
 * CONSTRAINTS
 
 A more formal writing of the constraints that the variables shall have to abide
+
+We must select an amount of speakers that is equal to the number of talks
+The cost of bringing theese speakers in must not exceed our budget
+We must select an amount of topics equal to the number of talks whoose distance is maximized.
