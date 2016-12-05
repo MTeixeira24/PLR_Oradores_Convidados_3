@@ -1,0 +1,87 @@
+:-use_module(library(clpfd)).
+
+puzzle([S,E,N,D,M,O,R,Y]) :-
+		domain([S,E,N,D,M,O,R,Y],0,9),
+		
+		S #> 0, M #> 0,
+		all_different([S,E,N,D,M,O,R,Y]),
+		(S*1000 + E * 100 + N * 10 + D) + (M * 1000 + O * 100 + R * 10 + E) 
+		#= (M * 10000 + O * 1000 + N * 100 + E * 10 + Y),
+		
+		labeling([], [S,E,N,D,M,O,R,Y]).
+
+locket([A,B,C]) :-
+		domain([A,B,C],1,50),
+		B #= A * 2, C #= B + 10,
+		A + B #> 10,
+		A #= A1 * 10 + A2, B #= B1 * 10 + B2,
+		domain([A1,B1],1,5), domain([A2,B2],0,9),
+		(A1 mod 2 #= 0 #/\ A2 mod 2 #\= 0)#\/(A1 mod 2 #\= 0 #/\ A2 mod 2 #= 0),
+		labeling([],[A,B,C]).
+		
+%%Guardas no forte
+
+guardas(L):-
+		length(L, 12), %Constroi uma lista com 12 variavies não instanciadas
+		domain(L,1,12),
+		count(1, L, #=, C1), %%Quantos guardas estão na Sala1. Relacionar C1 com o número de 1s que ocorrem em L.
+		count(2, L, #=, C2),
+		count(3, L, #=, C3),
+		count(4, L, #=, C4),
+		count(5, L, #=, C5),
+		count(6, L, #=, C6),
+		count(7, L, #=, C7),
+		count(8, L, #=, C8),
+		count(9, L, #=, C9),
+		count(10, L, #=, C10),
+		count(11, L, #=, C11),
+		count(12, L, #=, C12),
+		sum([C1,C2,C3,C4], #=, 5), %soma de uma lista de variavies %Tem de ser exatamente 5.
+		sum([C4,C5,C6,C7], #=, 5),
+		sum([C7,C8,C9,C10], #=, 5),
+		sum([C10,C11,C12,C1], #=, 5),
+		
+		labeling([],L).
+%%Escrever na consola na forma de guardas(L), write(L) para mostrar todas as soluções
+
+%%Variação para olhar para salas e ver quantos guardas lá estão
+guardas(L, 1) :-
+		length(L,12),
+		domain(L,0,5), %%Só pode haver 5 guardas numa sala e esta pode estar vazia.
+		sum(L, #=, 12),
+		L = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12],
+		sum([S1,S2,S3,S4], #=, 5),
+		sum([S4,S5,S6,S7], #=, 5),
+		sum([S7,S8,S9,S10], #=, 5),
+		sum([S10,S11,S12,S1], #=, 5),
+		labeling([],L).
+%%Problema das rainhas
+nrainhas(Col) :-
+		Col = [A1,A2,A3,A4],
+		domain(L, 1, 4),
+		all_different(L),
+		A1#\=A2+1, A1#\=A2-1, A1#\=A3+2, A1#\=A3-2, A1#\=A4+3, A1#\=A4-3,
+		A2#\=A3+1, A2#\=A3-1, A2#\=A4+2, A2#\=A4-2,
+		A3#\=A4+1, A3#\=A4-1,
+		labeling([],Col).
+		
+%%%%%%%%%PLS5 - Qual a cor do primeiro carro.
+%%%Os carros têm cores e tamanhos
+
+pls5(Cores) :-
+		Cores = [C1,C2,C3,C4], %C1 é a cor do primeiro carro
+		Tamanhos = [T1,T2,T3,T4],
+		domain(Cores, 1, 4), Amarelo = 1, Verde = 2, Azul = 3, Preto = 4,
+		domain(Tamanhos, 1, 4), %1 mais pequeno, 4 é o maior.
+		%%%Restrições
+		all_different(Cores), all_different(Tamanhos),
+		%%O carro azul nunca pode estar nas pontas
+		%(C2 #= Azul #/\ T1 #< T3 )#\/ 
+		%(C3 #= Azul #/\ T2 #< T4),
+		element(PosAzul, Cores, Azul) %Indice na lista de cores onde esta o carro azul 
+		AntesAzul #= PosAzul - 1, DepoisAzul #= PosAzul + 1,
+		element(AntesAzul, Tamanhos, TamAntesAzul),
+		element(DepoisAzul, Tamanhos, TamDepoisAzul),
+		TamAntesAzul #< TamDepoisAzul,
+		
+
