@@ -1,0 +1,75 @@
+Aritméticos: 
+#= | #\= | #< | #=< | #> | #>=
+
+Soma: 
+sum(+Xs,+RelOp,?Value)
+
+produto escalar: 
+scalar_product(+Coeffs,+Xs,+RelOp,?Value)
+scalar_product(+Coeffs,+Xs,+RelOp,?Value,+Options)
+
+Mínimo/Máximo:
+minimum(?Value,+Xs)
+maximum(?Value,+Xs)
+
+dominios:
+domain(+Variables,+Min,+Max)
+?X in +Range
+?X in_set +FDSet
+
+Proporsicionais
+#\ :Q – verdadeira se a restrição Q for falsa
+:P #/\ :Q – verdadeira se as restrições P e Q são ambas verdadeiras
+:P #\ :Q – verdadeira se exatamente uma das restrições P e Q é verdadeira
+:P #\/ :Q – verdadeira se pelo menos uma das restrições P e Q é verdadeira
+:P #=> :Q
+:Q #<= :P – verdadeira se a restrição Q é verdadeira ou se a restrição P é falsa
+:P #<=> :Q – verdadeira se P e Q são ambas verdadeiras ou ambas falsas
+
+Contar:
+global_cardinality(+Xs,+Vals)
+global_cardinality(+Xs,+Vals,+Options)
+
+Dizer que têm de ser diferentes:
+all_different(+Variables) / all_different(+Variables,+Options)
+all_distinct(+Variables) / all_distinct(+Variables,+Options)
+
+Quantidade de valores distintos numa lista
+all_different(+Variables) / all_different(+Variables,+Options)
+all_distinct(+Variables) / all_distinct(+Variables,+Options)
+
+Assignment
+assignment(+Xs,+Ys)
+assignment(+Xs,+Ys,+Options)
+
+Ordenar
+sorting(+Xs,+Ps,+Ys)
+
+Ordem Lexicográfica
+lex_chain(+Vectors)
+lex_chain(+Vectors,+Options)
+
+Elemento na posição N
+element(?X,+List,?Y)
+
+Relações chave-valor
+table(+Tuples,+Extension)
+table(+Tuples,+Extension,+Options)
+
+Case
+case(+Template,+Tuples,+Dag)
+case(+Template,+Tuples,+Dag,+Options)
+
+Circuito
+circuit(+Succ)
+circuit(+Succ,+Pred)
+
+Otimizar tarefas com recursos
+cumulative(+Tasks)
+cumulative(+Tasks,+Options)
+
+Otimizar tarefas com recursos para N máquinas
+cumulatives(+Tasks,+Machines)
+cumulatives(+Tasks,+Machines,+Options)
+
+

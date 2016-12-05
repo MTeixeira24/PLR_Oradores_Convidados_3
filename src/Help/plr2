@@ -1,0 +1,66 @@
+:-use_module(library(clpfd)).
+
+%%12 automoveis
+%%Distribuição: 4 amarelos; 2 verdes; 3 vermelhos; 3 azuis;
+%%1º e ultimo são da mesma cor.
+%%2ª e penultimo são da mesma cor
+%%5º é azul
+%%Todos os 3 consecutivos têm cores diferentes
+%%Sequencia amarelo-verde-vermelho-azul ocorre só uma vez
+
+trios([A,B,C|R]) :-
+        all_different([A,B,C]),
+        trios([B,C|R]).
+trios([_,_]).
+
+quadras([A,B,C,D|R], [V|Vs]) :- %%Vai ter o valor 1 se o abaixo ocorrer se não 0
+        (A #= 1 #/\ B#=2 #/\ C#=3 #/\ D#=4) #<=> V,
+        quadras([B,C,D|R], Vs).
+quadras([_,_,_],[]).
+
+automovel(L) :- 
+%%12 variaveis os carros, variando entre 4 cores
+        length(L, 12),
+        domain(L,1, 4),%% 1=Amarelo, 2=verde, 3=vermelho, 4=azul
+%%Restrições
+        global_cardinality(L,[1-4, 2-2,3-3,4-3]), %%isto equivale ao uso de 4 counts
+        element(1, L, Cor), element(12,L, Cor),
+        element(2, L, Cor2), element(11,L, Cor2), %%!! Possivel erro aqui
+        element(5, L, 4),
+        trios(L), %%3 consecutivos tem cores diferentes
+        %%materialização de restrições
+        quadras(L, Vs),
+        sum(Vs, #=, 1), %%Só pode ocorrer uma vez
+        labeling([], L).
+
+%%PLOP 2 O carteiro preguiçoso
+
+soma_dist([A,B|R], V) :-
+	V #= abs(A-B) + VR,
+	soma_dist([B|R], VR).
+soma_dist([_],0).
+
+carteiro(N, L, V) :-
+		length(L, N),
+		domain(L,1,N),
+		%all_distinct(L),  %%só queremos visitar uma casa uma vez
+		circuit(L),
+		soma_dist(L,V),
+		labeling([maximize(V)],L).
+		
+tarefas(Ss, End) :-
+		Ss = [S1,S2,S3,S4,S5,S6,S7],
+		Es = [E1,E2,E3,E4,E5,E6,E7],
+		Tasks = [
+			task(S1, 16, E1, 2, 1), %%O 1 é o identificador de tarefa,
+			task(S2, 6, E2, 9, 2),
+			task(S3, 13, E3, 3, 3),
+			task(S4, 7, E4, 7, 4),
+			task(S5, 5, E5, 10, 5),
+			task(S6, 18, E6, 1, 6),
+			task(S7, 4, E7, 11, 7)
+			],
+			maximum(End, Es),
+			domain(Ss, 1, 30),
+			cumulative(Tasks, [limit(13)]),
+			labeling([minimize(End)], Ss).
