@@ -58,20 +58,26 @@ An attempt to rewrite the problem in a way that is easier to better visualize th
 
 18) A lecture will have a main subject that may cover a similar subject based on distance
 
-19) Different parameters include: Number os lectures, Subjects, Speakers, Cost of stay and transportations, budget, etc.
+19) Different parameters include: Number of lectures, Subjects, Speakers, Cost of stay and transportations, budget, etc.
 
 
 * DOMINION/VARIABLES
 
 Identification of possible variables and their corresponding dominion
 
-Number of talks (palestras)
-Budget
-Number of speakers
-A matrix with n lines and n columns where n is the number of topics
-The topics can be hard coded into the predicate
+Number of talks (palestras) - Input
+Budget - Input
+Number of speakers - Input, Hardcoded
+
+A matrix with n lines and n columns where n is the number of topics - Input, Hardcoded
 The matrix will have in its diagonal the value 0 which indicates the same topic
 The farther from this diagonal the larger the distance.
+
+Cost of stay- Input
+Cost of transportation - Input, hardcoded
+
+Results:
+
 
 
 * CONSTRAINTS
