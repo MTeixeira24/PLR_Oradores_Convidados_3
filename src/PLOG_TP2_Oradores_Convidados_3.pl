@@ -7,10 +7,29 @@ listGenders([S|Speakers], [G|Genders],SpeakerInfo) :-
         listGenders(Speakers, Genders, SpeakerInfo).
 listGenders([],[],_).
 
-guest_speakers(NTalks, Budget, Speakers) :-
+checkSpeeches(Speakers, [CS|ChoosenSubjects], SubjectSpeakers) :-
+        member(CS-_-LS, SubjectSpeakers),
+        element(_,LS,A),
+        element(_,Speakers, B),
+        B#=A,
+        checkSpeeches(Speakers, ChoosenSubjects, SubjectSpeakers).
+checkSpeeches(_,[],_).
+
+getDistanceList([C|ChoosenSubjects], SubjectDistance, [Distance|DistanceList]) :-
+        getSubDistances(C, ChoosenSubjects, SubjectDistance,Distances),
+        sum(Distances, #=, Distance),
+        getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList).
+getDistanceList([],_,[]).
+
+getSubDistances(C, [CC|ChoosenSubjects], SubjectDistance,[D|Distances]) :-
+        member(C-CC-D, SubjectDistance),
+        getSubDistances(C, ChoosenSubjects, SubjectDistance, Distances).
+getSubDistances(_,[],_,[]).
+
+guest_speakers(NTalks, Budget) :-
        length(Speakers, NTalks),
        length(ChoosenSubjects, NTalks),
-       SubjectSpeakers = [
+       SubjectSpeakers = [ 
                             1-'Topic1'-[1,2,3], %%Subject Id, Subject Name, Speakers
                             2-'Topic2'-[6],
                             3-'Topic3'-[2,4,5,6],
@@ -80,5 +99,9 @@ guest_speakers(NTalks, Budget, Speakers) :-
         listGenders(Speakers, Genders,SpeakerInfo),
         global_cardinality(Genders,[0-Males,1-Females]),
         Males #= Females,
-        all_distinct(ChoosenSubjects)
+        all_distinct(ChoosenSubjects),
+        checkSpeeches(Speakers, ChoosenSubjects, SubjectSpeakers),
+        getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList),
+        sum(DistanceList, #=, TotalDistance),
+        labeling([maximize(TotalDistance)],[ChoosenSubjects])
         .
