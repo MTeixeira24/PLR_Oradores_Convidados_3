@@ -30,15 +30,14 @@ getDistanceList([C|ChoosenSubjects], SubjectDistance, [Distance|DistanceList]) :
         getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList).
 getDistanceList([],_,[]).
 
-getSubDistances([Subject|ChoosenSubjects], Distances, [D|List]) :-
-        Aux #= Subject + 1,
-        element(Aux, Distances, D),
-        getSubDistances(ChoosenSubjects, Distances, List).
+getSubDistances([Subject|ChoosenSubjects],[Ds|Distances], [D|List]) :-
+        element(Subject, Distances, D),
+        getSubDistances(ChoosenSubjects, [Ds|Distances], List).
 getSubDistances([],_,[]).
 
-isSorted([_|[]]).
+isSorted([_]).
 isSorted([A,B|List]) :-
-        A #> B,
+        A #< B,
         isSorted([B|List]).
 
 
@@ -62,10 +61,10 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
                             5
                          ],
        SubjectDistance = [
-        [1,-1,29,60,3,95,55,29,39,12],%%Line is the subject, Column is other subject, contents are the distance
-        [2,-1,-1,71,88,24,25,60,24,84],
+        [1,0,29,60,3,95,55,29,39,12],%%Line is the subject, Column is other subject, contents are the distance
+        [2,0,0,71,88,24,25,60,24,84],
         [3,0,0,0,62,37,15,17,61,63],
-        [4,-1,9,-1,-1,55,82,57,21,37],
+        [4,0,0,0,0,55,82,57,21,37],
         [5,0,0,0,0,0,64,93,82,34],
         [6,0,0,0,0,0,0,45,14,26],
         [7,0,0,0,0,0,0,0,21,62],
