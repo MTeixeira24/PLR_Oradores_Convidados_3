@@ -39,7 +39,30 @@ isSorted([_]).
 isSorted([A,B|List]) :-
         A #< B,
         isSorted([B|List]).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+getCountries([S|SpeakerInfo], [C|SpeakerInfoCountriesList]) :-
+        nth1(1,S,C),
+        getCountries(SpeakerInfo, SpeakerInfoCountriesList).
+getCountries([],[]).
 
+listCountries([S|Speakers], [C|SpeakerCountries], SpeakerInfoCountriesList) :-
+        element(S, SpeakerInfoCountriesList, C1),
+        C #= C1,
+        listCountries(Speakers, SpeakerCountries, SpeakerInfoCountriesList).
+listCountries(_,[],_).
+
+getCosts([LS|SpeakerInfo], [Cost|SpeakerInfoCostsList]) :-
+                nth1(1, LS, D),
+                nth1(3, LS, N),
+                nth1(4, LS, FC),
+                Cost is ((100 * D) + (200 * FC) + (150 * N)),
+                getCosts(SpeakerInfo, SpeakerInfoCostsList).
+getCosts([],[]).
+listCost([S|Speakers], [Cost|SpeakerCosts], SpeakerInfoCostsList) :-
+        element(S, SpeakerInfoCostsList, Cost),
+        listCost(Speakers, SpeakerCosts, SpeakerInfoCostsList).
+listCost([],[],_).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
        
@@ -88,15 +111,28 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
         length(Speakers, NTalks),
         length(ChoosenSubjects, NTalks),
         length(Genders, NTalks),
-        domain(Speakers, 1, 6),
+        length(SpeakerCountries, NTalks),
+        length(SpeakerCosts, NTalks),
+        domain(Speakers, 1, 12),
         domain(ChoosenSubjects,1,9),
         domain(Genders, 0, 1),
+        domain(SpeakerCountries,1,9),
+        domain(SpeakerCosts,1,10000),
         all_distinct(Speakers),
         all_distinct(ChoosenSubjects),
         global_cardinality(Genders,[0-Males,1-Females]),
         Males #= Females,
         getGenders(SpeakerInfo, SpeakerInfoGenderList),
         listGenders(Speakers, Genders, SpeakerInfoGenderList),
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        all_distinct(SpeakerCountries),
+        getCountries(SpeakerInfo, SpeakerInfoCountriesList),
+        listCountries(Speakers, SpeakerCountries, SpeakerInfoCountriesList),
+        getCosts(SpeakerInfo, SpeakerInfoCostList),
+        listCost(Speakers, SpeakerCosts,SpeakerInfoCostList),
+        sum(SpeakerCosts, #=, TotalCost),
+        TotalCost #< Budget #\/ TotalCost #= Budget,
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         isSorted(ChoosenSubjects),
         checkSpeeches(Speakers, ChoosenSubjects, SubjectSpeakers),
         getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList),
