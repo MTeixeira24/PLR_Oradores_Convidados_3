@@ -64,11 +64,21 @@ listCost([S|Speakers], [Cost|SpeakerCosts], SpeakerInfoCostsList) :-
 listCost([],[],_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
+showResults([S|Speakers], [T|Topics], [G|Gender], [C|Country], CountryNames, SpeakerNames, SubjectNames, Genders) :-
+        nth1(S, SpeakerNames, SN),
+        nth1(T, SubjectNames, TN),
+        nth1(C, CountryNames, CN),
+        nth0(G, Genders, GN),
+        write(SN),write(' -'),write(GN),write('- from '),write(CN),write(' will be talking about '),write(TN), nl,
+        showResults(Speakers, Topics, Gender, Country, CountryNames, SpeakerNames, SubjectNames, Genders).
+showResults([],[],[],[],_,_,_,_).
+
+guest_speakers(NTalks, Budget) :-
        
-        %%Lists
-        %%Speakers >> Topics
-        
+        CountryNames = ['Poland','Germany','France','Holand','Finlad','Russia','Angola','Brasil','India'],
+        SpeakerNames = ['Speaker1','Speaker2','Speaker3','Speaker4','Speaker5','Speaker6','Speaker7','Speaker8','Speaker9','Speaker10','Speaker11','Speaker12'], 
+        SubjectNames = ['Topic1','Topic2','Topic3','Topic4','Topic5','Topic6','Topic7','Topic8','Topic9'],
+        GenderNames = ['Male','Female'],
         SubjectSpeakers = [ 
                             2, %%Index being the speaker and the value the topic
                             1,
@@ -81,7 +91,9 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
                             3,
                             6,
                             4,
-                            5
+                            5,
+                            8,
+                            1
                          ],
        SubjectDistance = [
         [1,0,29,60,3,95,55,29,39,12],%%Line is the subject, Column is other subject, contents are the distance
@@ -106,7 +118,9 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
                         [8,1,5,0],
                         [5,0,3,0],
                         [4,1,5,1],
-                        [2,1,2,0]
+                        [2,1,2,0],
+                        [1,0,0,0],
+                        [7,1,2,1]
                         ],
         length(Speakers, NTalks),
         length(ChoosenSubjects, NTalks),
@@ -117,7 +131,7 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
         domain(ChoosenSubjects,1,9),
         domain(Genders, 0, 1),
         domain(SpeakerCountries,1,9),
-        domain(SpeakerCosts,1,10000),
+        domain(SpeakerCosts,1,Budget),
         all_distinct(Speakers),
         all_distinct(ChoosenSubjects),
         global_cardinality(Genders,[0-Males,1-Females]),
@@ -137,7 +151,7 @@ guest_speakers(NTalks, Budget, Speakers, ChoosenSubjects) :-
         checkSpeeches(Speakers, ChoosenSubjects, SubjectSpeakers),
         getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList),
         sum(DistanceList, #= ,TotalDistance),
-        labeling([maximize(TotalDistance)], ChoosenSubjects),
-        write(TotalDistance).
-
-
+        labeling([down,first_fail,maximize(TotalDistance)], ChoosenSubjects),
+        write('For '),write(NTalks), write(' lectures and a budget of '),write(Budget), write(' we have the following result:'),nl,nl,
+        showResults(Speakers, ChoosenSubjects, Genders, SpeakerCountries, CountryNames, SpeakerNames, SubjectNames, GenderNames),nl,
+        write('With a total cost of: '),write(TotalCost), write(' and a distance between topics of: '),write(TotalDistance),nl.
