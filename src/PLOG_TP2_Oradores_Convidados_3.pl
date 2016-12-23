@@ -189,7 +189,8 @@ guest_speakers(NTalks, Budget) :-
         all_distinct(Speakers),
         all_distinct(ChoosenSubjects),
         global_cardinality(Genders,[0-Males,1-Females]),
-        Males #= Females,
+        Mod is mod(NTalks, 2),
+	(Mod #= 0 #/\ Males #= Females) #\/ (Males #= Females + 1 #\/ Females #= Males + 1),
         getGenders(SpeakerInfo, SpeakerInfoGenderList),
         listGenders(Speakers, Genders, SpeakerInfoGenderList),
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
