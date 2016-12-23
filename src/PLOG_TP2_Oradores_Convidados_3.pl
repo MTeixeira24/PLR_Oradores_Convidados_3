@@ -63,21 +63,76 @@ listCost([S|Speakers], [Cost|SpeakerCosts], SpeakerInfoCostsList) :-
         listCost(Speakers, SpeakerCosts, SpeakerInfoCostsList).
 listCost([],[],_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+printResult(N, [S|Speakers], [C|SpeakerCountries], [ChS|ChoosenSubjects], SpeakerNames, CountriesNames, Topics) :-
+		write(N),
+		write(' - '),
+		nth1(S, SpeakerNames, Name),
+		write(Name),
+		nth1(C, CountriesNames, Country),
+		write(' ('),
+		write(Country),
+		write('): *'),
+		nth1(ChS, Topics, T),
+		write(T),
+		write('*;'),
+		nl,
+		N1 is N + 1,
+		printResult(N1, Speakers, SpeakerCountries, ChoosenSubjects, SpeakerNames, CountriesNames, Topics).
+printResult(_,[],[],[],_,_,_).
 
-showResults([S|Speakers], [T|Topics], [G|Gender], [C|Country], CountryNames, SpeakerNames, SubjectNames, Genders) :-
-        nth1(S, SpeakerNames, SN),
-        nth1(T, SubjectNames, TN),
-        nth1(C, CountryNames, CN),
-        nth0(G, Genders, GN),
-        write(SN),write(' -'),write(GN),write('- from '),write(CN),write(' will be talking about '),write(TN), nl,
-        showResults(Speakers, Topics, Gender, Country, CountryNames, SpeakerNames, SubjectNames, Genders).
-showResults([],[],[],[],_,_,_,_).
+printEnd(NTalks, Males, Females, TotalCost, Budget, TotalDistance) :-
+		write('Total number of speakers - '),
+		write(NTalks),
+		write(' ('),
+		write(Males),
+		write(' males and '),
+		write(Females),
+		write(' females)'),
+		nl,
+		write('Total costs = '),
+		write(TotalCost),
+		MoneyLeft is Budget - TotalCost,
+		write('$ ('),
+		write(MoneyLeft),
+		write('$ left)'),
+		nl,
+		write('Total distance between chosen subjects = '),
+		write(TotalDistance).
 
 guest_speakers(NTalks, Budget) :-
        
-        CountryNames = ['Poland','Germany','France','Holand','Finlad','Russia','Angola','Brasil','India'],
-        SpeakerNames = ['Speaker1','Speaker2','Speaker3','Speaker4','Speaker5','Speaker6','Speaker7','Speaker8','Speaker9','Speaker10','Speaker11','Speaker12'], 
-        SubjectNames = ['Topic1','Topic2','Topic3','Topic4','Topic5','Topic6','Topic7','Topic8','Topic9'],
+        CountryNames = ['Portugal',
+			'Spain',
+			'France',
+			'Germany',
+			'Ukraine',
+			'Russia',
+			'China',
+			'USA',
+			'Canada'],
+        SpeakerNames = ['Mauro Raymundo',
+			'Melisande Cadieux',
+			'Lesya Derkach',
+			'Boris Lazarenko',
+			'Antoine Franchet',
+			'Mary N. Smith',
+			'Casandra Mayor',
+			'Gary L. Shull',
+			'Mattie K. Jordan',
+			'Igor Golov',
+			'Katharina Fenstermacher',
+			'Francisca Mojica',
+			'Rafael Martins',
+			'Cai Ning'	], 
+        SubjectNames = ['The role of engineers in the development of the earth`s resources',
+			'Computerixed maintenance management system',
+			'Technical design: effective use of machines',
+			'Testing and communication in programming efforts',
+			'Security in cloud computing masters',
+			'Information security management frameworks',
+			'What methods are used to develop java applications',
+			'Disadvantages to a distributed system',
+			'Importance of qa testing during software development process'],
         GenderNames = ['Male','Female'],
         SubjectSpeakers = [ 
                             2, %%Index being the speaker and the value the topic
@@ -152,6 +207,7 @@ guest_speakers(NTalks, Budget) :-
         getDistanceList(ChoosenSubjects, SubjectDistance, DistanceList),
         sum(DistanceList, #= ,TotalDistance),
         labeling([down,first_fail,maximize(TotalDistance)], ChoosenSubjects),
-        write('For '),write(NTalks), write(' lectures and a budget of '),write(Budget), write(' we have the following result:'),nl,nl,
-        showResults(Speakers, ChoosenSubjects, Genders, SpeakerCountries, CountryNames, SpeakerNames, SubjectNames, GenderNames),nl,
-        write('With a total cost of: '),write(TotalCost), write(' and a distance between topics of: '),write(TotalDistance),nl.
+        nl,
+	printResult(1, Speakers, SpeakerCountries, ChoosenSubjects, SpeakerNames, CountriesNames, Topics),
+	nl,
+	printEnd(NTalks, Males, Females, TotalCost, Budget, TotalDistance).
