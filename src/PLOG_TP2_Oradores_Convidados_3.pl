@@ -101,7 +101,7 @@ printEnd(NTalks, Males, Females, TotalCost, Budget, TotalDistance) :-
 
 guest_speakers(NTalks, Budget) :-
        
-        CountryNames = ['Portugal',
+        CountriesNames = ['Portugal',
 			'Spain',
 			'France',
 			'Germany',
@@ -124,7 +124,7 @@ guest_speakers(NTalks, Budget) :-
 			'Francisca Mojica',
 			'Rafael Martins',
 			'Cai Ning'	], 
-        SubjectNames = ['The role of engineers in the development of the earth`s resources',
+        Topics = ['The role of engineers in the development of the earth`s resources',
 			'Computerixed maintenance management system',
 			'Technical design: effective use of machines',
 			'Testing and communication in programming efforts',
@@ -133,7 +133,6 @@ guest_speakers(NTalks, Budget) :-
 			'What methods are used to develop java applications',
 			'Disadvantages to a distributed system',
 			'Importance of qa testing during software development process'],
-        GenderNames = ['Male','Female'],
         SubjectSpeakers = [ 
                             2, %%Index being the speaker and the value the topic
                             1,
